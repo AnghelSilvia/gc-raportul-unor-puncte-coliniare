@@ -1,0 +1,1 @@
+# gc-raportul-unor-puncte-coliniare
