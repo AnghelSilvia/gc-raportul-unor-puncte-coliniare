@@ -1,6 +1,7 @@
 # depslib dependency file v1.0
-1610742103 source:c:\users\silvia\gc-raportul-unor-puncte-coliniare\gc-raportul-unor-puncte-coliniare\main.cpp
+1610756963 source:c:\users\silvia\gc-raportul-unor-puncte-coliniare\gc-raportul-unor-puncte-coliniare\main.cpp
 	<iostream>
 	<fstream>
 	<vector>
+	<algorithm>
 

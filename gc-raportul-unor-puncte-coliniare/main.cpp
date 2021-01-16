@@ -9,6 +9,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -32,6 +33,7 @@ void readInput(ifstream& inputFile, vector<Point>& points)
     {
         tempPoint.coordinates.clear();
         inputFile >> tempPoint.name;
+
         for (id = 0; id < d; ++id)
         {
             inputFile >> tempCoord;
@@ -41,10 +43,21 @@ void readInput(ifstream& inputFile, vector<Point>& points)
     }
 }
 
+bool comparator(const Point& p1, const Point& p2)
+{
+  return p1.coordinates[0] < p2.coordinates[0];
+}
+
+void sortPoints(vector<Point>& points)
+{
+    int i;
+    sort(points.begin(), points.end(), &comparator);
+}
+
 void printPoints(const vector<Point>& points)
 {
     int i, j;
-    cout << "Punctele sunt: \n";
+
     for (i = 0; i < points.size(); ++i)
     {
         cout << points[i].name << "(";
@@ -92,15 +105,60 @@ float computeRatio(const Point& M, const Point& N, const Point& P)
     return r;
 }
 
+void getMaxRatio(const vector<Point>& points)
+{
+    float maxRatio = 0;
+    float r;
+    Point M, N, P;
+
+    for (int i = 0; i < points.size() - 2; ++i)
+        for (int j = i + 1; j < points.size() - 1; ++j)
+            for (int k = j + 1; k < points.size(); ++k)
+            {
+                r = computeRatio(points[i], points[j], points[k]);
+                if (r > maxRatio)
+                {
+                    maxRatio = r;
+                    M = points[i];
+                    N = points[j];
+                    P = points[k];
+                }
+            }
+
+    for (int i = 0; i < points.size() - 2; ++i)
+        for (int j = i + 1; j < points.size() - 1; ++j)
+            for (int k = j + 1; k < points.size(); ++k)
+            {
+                r = computeRatio(points[k], points[j], points[i]);
+                if (r > maxRatio)
+                {
+                    maxRatio = r;
+                    M = points[k];
+                    N = points[j];
+                    P = points[i];
+                }
+            }
+    cout << "\nRaportul maxim si punctele pentru care raportul are aceasta valoare: ";
+    cout << "r(" << M.name << ", " << N.name << ", " << P.name << ") = " << maxRatio;
+}
+
 int main()
 {
     vector<Point> points;
 
     ifstream fin("data.in");
-    ofstream fout("data.out");
 
     readInput(fin, points);
+
+    cout << "Configuratia initiala:\n";
     printPoints(points);
+
+    sortPoints(points);
+
+    cout << "Dupa sortarea punctelor:\n";
+    printPoints(points);
+
+    getMaxRatio(points);
 
     return 0;
 }
