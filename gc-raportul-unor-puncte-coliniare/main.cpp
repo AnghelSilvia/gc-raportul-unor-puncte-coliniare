@@ -20,7 +20,7 @@ struct Point{
 
 void readInput(ifstream& inputFile, vector<Point>& points)
 {
-    // d - dimenisiunea
+    // d - dimensiunea
     // n - numarul de puncte
     // id, in - iteratori pentru d, respectiv n
     int d, n, id, in;
@@ -50,7 +50,6 @@ bool comparator(const Point& p1, const Point& p2)
 
 void sortPoints(vector<Point>& points)
 {
-    int i;
     sort(points.begin(), points.end(), &comparator);
 }
 
